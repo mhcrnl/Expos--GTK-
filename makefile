@@ -16,6 +16,7 @@ ifeq ($(DEBUG),y)
 	@echo $(SRC)
 	@echo $(OBJ)
 endif
+	pdflatex presentation.tex
 calc: $(OBJ)
 	$(CC) -o ./bin/$@ ./bin/$^ $(LDFLAGS)
 %.o: %.c
@@ -25,3 +26,5 @@ clean:
 	rm -rf *.o *~
 cleanall: clean
 	rm -rf $(EXEC)
+presentation:
+	pdflatex presentation.tex

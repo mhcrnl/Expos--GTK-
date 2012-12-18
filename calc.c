@@ -5,6 +5,12 @@
 #include <string.h>
 #define max 30
 
+typedef struct{
+	GtkWidget *Entrer;
+	int res;
+	int type;
+}MyData;
+
 void _setText(GtkWidget *pBtn, gpointer entry){
 	gchar stext[max];
 	if(strcmp(gtk_entry_get_text(GTK_ENTRY(entry)),"0") != 0){
@@ -20,8 +26,68 @@ void _setText(GtkWidget *pBtn, gpointer entry){
 	gtk_entry_set_text(GTK_ENTRY(entry), stext);
 }
 
-void clear(GtkWidget *pBtn, gpointer entry){
-	gtk_entry_set_text(GTK_ENTRY(entry), "0");
+void clear(GtkWidget *pBtn, MyData* data){
+	gtk_entry_set_text(GTK_ENTRY(data->Entrer), "0");
+	data->res = 0;
+	data->type = 0;
+}
+
+void add(GtkWidget *pBtn, MyData* data){
+	data->res = atoi(gtk_entry_get_text(GTK_ENTRY(data->Entrer)));
+	data->type = 0;
+	gtk_entry_set_text(GTK_ENTRY(data->Entrer), "0");
+}
+
+void sub(GtkWidget *pBtn, MyData* data){
+	data->res = atoi(gtk_entry_get_text(GTK_ENTRY(data->Entrer)));
+	data->type = 1;
+	gtk_entry_set_text(GTK_ENTRY(data->Entrer), "0");
+}
+
+void mul(GtkWidget *pBtn, MyData* data){
+	data->res = atoi(gtk_entry_get_text(GTK_ENTRY(data->Entrer)));
+	data->type = 2;
+	gtk_entry_set_text(GTK_ENTRY(data->Entrer), "0");
+}
+
+void divide(GtkWidget *pBtn, MyData* data){
+	data->res = atoi(gtk_entry_get_text(GTK_ENTRY(data->Entrer)));
+	data->type = 3;
+	gtk_entry_set_text(GTK_ENTRY(data->Entrer), "0");
+}
+
+void result(GtkWidget *pBtn, MyData* data){
+	//printf("%d\n",data->type);
+	int i;
+	if(data->type == 0){
+		printf("niok");
+		//addition
+		i = atoi(gtk_entry_get_text(GTK_ENTRY(data->Entrer)));
+		data->res = data->res + i;
+	}
+	if(data->type == 1){
+		printf("niok");
+		//soustraction
+		i = atoi(gtk_entry_get_text(GTK_ENTRY(data->Entrer)));
+		data->res = data->res - i;
+	}
+	if(data->type == 2){
+		printf("niok");
+		//multiplication
+		i = atoi(gtk_entry_get_text(GTK_ENTRY(data->Entrer)));
+		data->res = data->res * i;
+	}
+	if(data->type == 3){
+		printf("niok");
+		//division
+		if(atoi(gtk_entry_get_text(GTK_ENTRY(data->Entrer))) != 0){
+			i = atoi(gtk_entry_get_text(GTK_ENTRY(data->Entrer)));
+			data->res = data->res / i;
+		}
+	}
+	gchar stext[max];
+	g_sprintf(stext,"%d",data->res);
+	gtk_entry_set_text(GTK_ENTRY(data->Entrer), stext);//*/
 }
 
 int main(int argc, char** argv){
@@ -37,7 +103,7 @@ int main(int argc, char** argv){
 	GtkWidget *Entrer;
 	GtkWidget *Bouton[18];
 	GtkWidget *label;
-
+	
 	//*Création de fenêtre principal
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_default_size(GTK_WINDOW(window), 255, 200);
@@ -83,15 +149,22 @@ int main(int argc, char** argv){
 	Bouton[16] = gtk_button_new_with_label("clear");
 	gtk_table_attach(GTK_TABLE(table), Bouton[16],0, 4, 6, 7,GTK_EXPAND | GTK_FILL, GTK_EXPAND,0, 0);
 	
-	Entrer = gtk_entry_new();
-	gtk_entry_set_text(GTK_ENTRY(Entrer), "0");
-	gtk_widget_set_can_focus(GTK_WIDGET(Entrer), FALSE);
-	gtk_table_attach(GTK_TABLE(table), Entrer, 0, 4, 1, 2, GTK_EXPAND | GTK_FILL, GTK_EXPAND,0, 0);
+	MyData data;
+	data.Entrer = gtk_entry_new();
+	gtk_entry_set_text(GTK_ENTRY(data.Entrer), "0");
+	gtk_widget_set_can_focus(GTK_WIDGET(data.Entrer), FALSE);
+	gtk_table_attach(GTK_TABLE(table), data.Entrer, 0, 4, 1, 2, GTK_EXPAND | GTK_FILL, GTK_EXPAND,0, 0);
+	
 	
 	for(i=0;i<11;i++){
-		g_signal_connect(G_OBJECT(Bouton[i]),  "clicked", G_CALLBACK(_setText),(GtkWidget*)Entrer);
+		g_signal_connect(G_OBJECT(Bouton[i]),  "clicked", G_CALLBACK(_setText),(GtkWidget*)data.Entrer);
 	}
-	g_signal_connect(G_OBJECT(Bouton[16]),  "clicked", G_CALLBACK(clear),(GtkWidget*)Entrer);
+	g_signal_connect(G_OBJECT(Bouton[11]),  "clicked", G_CALLBACK(result),&data);
+	g_signal_connect(G_OBJECT(Bouton[12]),  "clicked", G_CALLBACK(mul),&data);
+	g_signal_connect(G_OBJECT(Bouton[13]),  "clicked", G_CALLBACK(divide),&data);
+	g_signal_connect(G_OBJECT(Bouton[14]),  "clicked", G_CALLBACK(add),&data);
+	g_signal_connect(G_OBJECT(Bouton[15]),  "clicked", G_CALLBACK(sub),&data);
+	g_signal_connect(G_OBJECT(Bouton[16]),  "clicked", G_CALLBACK(clear),&data);
 	
 	gtk_widget_show_all(window);
 

@@ -2,10 +2,30 @@
 \usepackage[french]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{listings}
 \usetheme{Warsaw}
 \title[GTK+]{GTK+\\Une boîte à outils pour interfaces graphiques}
-\author{Flavien Godefroy et Kevin Bradshaw}
+\author{Flavien Godfroy et Kevin Bradshaw}
 \date{18 Décembre 2012}
+%%configuration de listings
+\lstset{
+language=c,
+basicstyle=\ttfamily\small, %
+identifierstyle=\color{black}, %
+keywordstyle=\color{blue}, %
+stringstyle=\color{pink!200}, %
+commentstyle=\it\color{green!95}, %
+columns=flexible, %
+tabsize=2, %
+extendedchars=true, %
+showspaces=false, %
+showstringspaces=false, %
+numbers=left, %
+numberstyle=\tiny, %
+breaklines=true, %
+breakautoindent=true, %
+captionpos=b
+}
 \begin{document}
 
   \begin{frame}
@@ -70,13 +90,76 @@
   \end{frame}
 
   \section{Un petit projet avec GTK+}
+  \subsection{Bien commencer}
+  \begin{frame}{Les classes GTK+}
+  \begin{itemize}
+  \item GtkWidget\\
+  \begin{itemize}
+  \item GtkContainer\\
+  \begin{itemize}
+  \item	GtkTable\\
+  \item	GtkBox\\
+  \item GtkWindow\\
+  \end{itemize}
+  \item GtkEntry\\
+  \end{itemize}
+  \end{itemize}
+  \end{frame}
   \subsection{Calculatrice}
-  \begin{frame}{Finger in the nose!}
-    La classe ultime
+  \begin{frame}[containsverbatim]{La fenêtre principale}
+  \begin{lstlisting}
+//initialisation de l'environnement par defaut
+gtk_init(&argc, &argv);
+
+//Creation de notre fenetre
+GtkWindow window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+gtk_window_set_default_size(window, 255, 200);
+gtk_window_set_position(window, GTK_WIN_POS_CENTER);
+gtk_window_set_title(window," Calculatrice");
+g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(gtk_main_quit), NULL );
+
+//fenetre visible
+gtk_widget_show_all(window);
+
+//boucle principal de traitement GTK
+gtk_main();
+  \end{lstlisting}
+  \end{frame}
+  \begin{frame}[containsverbatim]{Un peu de contenu}
+  \begin{lstlisting}
+  //Creation d'une boite
+	GtkBox vBox = gtk_box_new(TRUE, 3);
+	gtk_container_add(window, vBox);
+	
+  //Creation d'une table
+	GtkTable table = gtk_table_new(4, 4, 1);
+	gtk_container_add(vBox, table);
+	
+  //Creation et ajout d'un bouton
+	GtkWidget bouton = gtk_button_new_with_label("0");
+	gtk_table_attach(table, bouton,0, 1, 5, 6,GTK_EXPAND | GTK_FILL, GTK_EXPAND,0, 0);
+\end{lstlisting}
+  \end{frame}
+  \begin{frame}[containsverbatim]{Les actions}
+\begin{lstlisting}
+//Fonction de remise a 0
+void clear(GtkWidget *pBtn, MyData* data){
+	gtk_entry_set_text(GTK_ENTRY(data->Entrer), "0");
+	data->res = 0;
+	data->type = 0;
+}
+//Structure de donnee
+typedef struct{
+	GtkWidget *Entrer;
+	int res;
+	int type;
+}MyData;
+//Liaison de la fonction avec le bouton
+g_signal_connect(G_OBJECT(Bouton),  "clicked", G_CALLBACK(clear),&data);
+\end{lstlisting}
   \end{frame}
 
-
-  \section{Pourquoi GTK+?}
+ \section{Pourquoi GTK+?}
   \subsection{Une librairie multi-plateformes, multi-langages}
   \begin{frame}{Une librairie multi-plateformes, multi-langages}
     Offre une librairie unifiée sur tous les langages principaux\\
@@ -91,4 +174,9 @@
     Les deux sont compatibles avec la majorité des langages et systèmes d'exploitation principaux
   \end{frame}
 
+  \section{Sources}
+  \begin{frame}{Sources}
+  blabla
+  \end{frame}
 \end{document}
+ 

@@ -8,60 +8,87 @@
 \date{18 Décembre 2012}
 \begin{document}
 
-\begin{frame}
-\titlepage
-\end{frame}
-
-\AtBeginSubsection[]
-{
-  \begin{frame}<beamer>
-    \frametitle{Layout}
-    \tableofcontents[currentsection,currentsubsection]
+  \begin{frame}
+    \titlepage
   \end{frame}
-}
 
-\section{Introduction}
+  \begin{frame}<beamer>
+      \frametitle{}
+      \tableofcontents
+    \end{frame}
 
-\subsection{Qu'est-ce?}
-\begin{frame}{Quoi?}
-GTK+ c'est GTK, mais en un peu plus mieux...
-\end{frame}
+  \AtBeginSection[]
+  {
+    \begin{frame}<beamer>
+      \frametitle{}
+      \tableofcontents[currentsection]
+    \end{frame}
+  }
 
-\subsection{Qui s'en sert?}
-\begin{frame}{Qui?}
-GTK+ c'est pour les gens qui veulent faire des trucs où il y a des trucs
-\end{frame}
+  \section{Introduction}
 
-
-\section{Histoire}
-\subsection{GIMP}
-\begin{frame}{GIMP}
-GIMP est à l'origine GTK
-\end{frame}
-
-\subsection{Et plus!}
-\begin{frame}{Le reste}
-Mais bon...
-\end{frame}
+  \subsection{Qu'est-ce?}
+    \begin{frame}{Qu'est-ce?}
+    GTK+ est une suite de bibliothèques (toolkit) visant la création d'interfaces graphiques de type WIMP (Windows, Icons, Menu, Pointer) par Widgets.\\
+    Visant originalement le langage C, elle est disponible aussi pour beaucoup d'autres, comme C++, Java et Python.
+  \end{frame}
 
 
-\section{Comparaison à ses competiteurs}
-\subsection{Qt}
-\begin{frame}{Qt}
-Fucking Qt quoi...
-\end{frame}
+  \section{Histoire}
+  \subsection{La situation à l'époque}
+  \begin{frame}{X Window System}
+    Protocole logiciel et réseau pour les interfaces graphiques\\
+    Créé au MIT en 1984\\
+    Devenu le standard "de facto" des affichages\\
+    Ne fournit pas de "look and feel" standardisé
+  \end{frame}
+  \begin{frame}{OPEN LOOK}
+    Spécification logicielle pour les interface graphiques\\
+    Créé à la fin des années 1980 par Sun Microsystems et AT\&T pour Unix\\
+    Cherche à définir un "look and feel" pour Unix, pour suivre les efforts de Macintosh, Microsoft et Amiga
+  \end{frame}
+  \begin{frame}{Motif}
+    Un compétiteur à OPEN LOOK\\
+    Finit par remplacer complètement OPEN LOOK en Juin 1993
+  \end{frame}
 
-\section{Un petit projet avec GTK+}
-\subsection{Calculatrice}
-\begin{frame}{Finger in the nose!}
-La classe ultime
-\end{frame}
+  \subsection{GIMP}
+  \begin{frame}{GIMP}
+    General Image Manipulation Program puis GNU Image Manipulation Program\\
+    Peter Mattis et Spencer Kimball commencent le projet GIMP à U.C. Berkeley en 1995\\
+    Mattis n'était pas satisfait par Motif, il crée GTK, pour GIMP ToolKit\\
+    Remplace totalement Motif en 1997 avec la version 0.60 de GIMP\\
+    1998, Tor Lilqvist commence le portage de GTK et GIMP sur Windows, et GTK est reconçu en orienté objet et se voit renommé GTK+
+  \end{frame}
+
+  \subsection{GTK\#, gtkmm, PyGTK, etc...}
+  \begin{frame}{GTK\#, gtkmm, PyGTK, etc...}
+    GIMP et GTK+ séduisent la communauté GNU\\
+    Nouveau standard pour beaucoup de logiciels libres comme GNOME, Firefox, Ardour et Inkscape\\
+    GTK+ devient compatible avec Macintosh et Windows, et même récemment HTML5\\
+    Des liaisons sont crées pour d'autres langages, rendant GTK+ accéssible à la majorité des développeurs.
+  \end{frame}
 
 
-\section{Pourquoi GTK+?}
-\subsection{Bonne question}
-\begin{frame}{La réponse?}
-Je n'en sais guère...
-\end{frame}
+  \section{Comparaison à ses competiteurs aujourd'hui}
+  \subsection{Qt}
+  \begin{frame}{Qt}
+    Le concurrent pricipal\\
+    Qt fournit aussi des outils pour le multi-processus, multimedia, réseau et d'autres\\
+
+  \end{frame}
+
+  \section{Un petit projet avec GTK+}
+  \subsection{Calculatrice}
+  \begin{frame}{Finger in the nose!}
+    La classe ultime
+  \end{frame}
+
+
+  \section{Pourquoi GTK+?}
+  \subsection{Bonne question}
+  \begin{frame}{La réponse?}
+    Je n'en sais guère...
+  \end{frame}
 
 \end{document}

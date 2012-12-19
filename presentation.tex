@@ -3,6 +3,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{listings}
+\usepackage{graphicx}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
 \usetheme{Warsaw}
 \title[GTK+]{GTK+\\Une boîte à outils pour interfaces graphiques}
 \author{Flavien Godfroy et Kevin Bradshaw}
@@ -57,36 +59,71 @@ captionpos=b
   \section{Histoire}
   \subsection{La situation à l'époque}
   \begin{frame}{X Window System}
-    Protocole logiciel et réseau pour les interfaces graphiques\\
-    Créé au MIT en 1984\\
-    Devenu le standard "de facto" des affichages\\
-    Ne fournit pas de "look and feel" standardisé
+    \begin{itemize}
+      \item Protocole logiciel et réseau pour les interfaces graphiques\\
+      \item Créé au MIT en 1984\\
+      \item Devenu le standard "de facto" des affichages\\
+      \item Ne fournit pas de "look and feel" standardisé
+    \end{itemize}
   \end{frame}
   \begin{frame}{OPEN LOOK}
-    Spécification logicielle pour les interface graphiques\\
-    Créé à la fin des années 1980 par Sun Microsystems et AT\&T pour Unix\\
-    Cherche à définir un "look and feel" pour Unix, pour suivre les efforts de Macintosh, Microsoft et Amiga
+    \begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.5]{"openlook"}
+    \caption{Un gestionnaire de fichiers avec OPEN LOOK}
+    \label{fig:openlook}
+    \end{figure}
+  \end{frame}
+  \begin{frame}{OPEN LOOK}
+    \begin{itemize}
+      \item Spécification logicielle pour les interfaces graphiques\\
+      \item Créé à la fin des années 1980 par Sun Microsystems et AT\&T pour Unix\\
+      \item Cherche à définir un "look and feel" pour Unix, pour suivre les efforts de Macintosh, Microsoft et Amiga
+    \end{itemize}
   \end{frame}
   \begin{frame}{Motif}
-    Un compétiteur à OPEN LOOK\\
-    Finit par remplacer complètement OPEN LOOK en Juin 1993
+    \begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.275]{"motif"}
+    \caption{Un calendrier avec Motif}
+    \label{fig:motif}
+    \end{figure}
+  \end{frame}
+  \begin{frame}{Motif}
+  \begin{itemize}
+    \item Un concurrent à OPEN LOOK\\
+    \item Finit par remplacer complètement OPEN LOOK en Juin 1993
+  \end{itemize}
   \end{frame}
 
   \subsection{GIMP}
   \begin{frame}{GIMP}
-    General Image Manipulation Program puis GNU Image Manipulation Program\\
-    Peter Mattis et Spencer Kimball commencent le projet GIMP à U.C. Berkeley en 1995\\
-    Mattis n'était pas satisfait par Motif, il crée GTK, pour GIMP ToolKit\\
-    Remplace totalement Motif en 1997 avec la version 0.60 de GIMP\\
-    1998, Tor Lilqvist commence le portage de GTK et GIMP sur Windows, et GTK est reconçu en orienté objet et se voit renommé GTK+
+    \begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.225]{"gimp"}
+    \caption{GIMP rendu avec GTK+}
+    \label{fig:gimpgtk}
+    \end{figure}
+  \end{frame}
+  \begin{frame}{GIMP}
+  \begin{itemize}
+    \item General Image Manipulation Program puis GNU Image Manipulation Program\\
+    \item Peter Mattis et Spencer Kimball commencent le projet GIMP à U.C. Berkeley en 1995\\
+    \item Mattis n'étant pas satisfait par Motif, il crée le GIMP ToolKit ("GTK")\\
+    \item 1997, GIMP 0.60 utilise exclusivement GTK\\
+    \item 1998, Tor Lilqvist commence un portage de GTK et GIMP sur Windows\\
+    \item GTK se voit reconçu en orienté objet sous le nom "GTK+"
+  \end{itemize}
   \end{frame}
 
-  \subsection{GTK\#, gtkmm, PyGTK, etc...}
-  \begin{frame}{GTK\#, gtkmm, PyGTK, etc...}
-    GIMP et GTK+ séduisent la communauté GNU\\
-    Nouveau standard pour beaucoup de logiciels libres comme GNOME, Firefox, Ardour et Inkscape\\
-    GTK+ devient compatible avec Macintosh et Windows, et même récemment HTML5\\
-    Des liaisons sont crées pour d'autres langages, rendant GTK+ accéssible à la majorité des développeurs.
+  \subsection{Aujourd'hui}
+  \begin{frame}{Aujourd'hui}
+  \begin{itemize}
+    \item GIMP et GTK+ séduisent la communauté GNU\\
+    \item Nouveau standard pour beaucoup de logiciels libres\\(ex: GNOME, Firefox, Ardour et Inkscape)\\
+    \item GTK+ se lance sur Macintosh et Windows, et encore d'autres\\
+    \item Liaisons avec d'autres langages, GTK+ devient plus accessible
+    \end{itemize}
   \end{frame}
 
   \section{Un petit projet avec GTK+}
@@ -161,17 +198,39 @@ g_signal_connect(G_OBJECT(Bouton),  "clicked", G_CALLBACK(clear),&data);
 
  \section{Pourquoi GTK+?}
   \subsection{Une librairie multi-plateformes, multi-langages}
+  \begin{frame}{Pourquoi GTK+?}
+    \begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.6]{"gtkplus"}
+    \caption{Un gestionnaire de fichiers avec GTK+}
+    \label{fig:gtk}
+    \end{figure}
+  \end{frame}
   \begin{frame}{Une librairie multi-plateformes, multi-langages}
-    Offre une librairie unifiée sur tous les langages principaux\\
-    Rend le portage de projets sur d'autres systèmes très simple\\
-    A su prouver sa fiabilité dans les différents projets qui l'utilisent
+  \begin{itemize}
+    \item Offre une apparence unifiée sur tous les systèmes principaux\\
+    \item Disponible pour la majorité des langages utilisés en entreprise\\
+    \item Facile à lier à un nouveau langage si besoin est\\
+    \item Rend le portage de projets sur d'autres systèmes très simple\\
+    \item A su prouver sa fiabilité dans les différents projets qui l'utilisent
+  \end{itemize}
   \end{frame}
   \subsection{Comparaison à Qt}
+  \begin{frame}{Qt}
+    \begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.45]{"qt"}
+    \caption{Un editeur de contacts avec Qt}
+    \label{fig:qt}
+    \end{figure}
+  \end{frame}
   \begin{frame}{Comparaison à Qt}
-    Le concurrent pricipal\\
-    Qt fournit aussi des outils pour le multi-processus, multimedia, réseau et d'autres\\
-    Qt est implémenté directement en C++, GTK+ en C\\
-    Les deux sont compatibles avec la majorité des langages et systèmes d'exploitation principaux
+  \begin{itemize}
+    \item Le concurrent pricipal\\
+    \item Qt fournit aussi des outils pour le multi-processus, multimedia, réseau et d'autres\\
+    \item Qt est implémenté directement en C++, GTK+ en C\\
+    \item Les deux sont compatibles avec la majorité des langages et systèmes d'exploitation principaux
+  \end{itemize}
   \end{frame}
 
   \section{Sources}

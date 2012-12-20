@@ -112,11 +112,8 @@ int main(int argc, char** argv){
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
 	g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(gtk_main_quit), NULL );
 	
-	VBox = gtk_box_new(TRUE, 3);
-	gtk_container_add(GTK_CONTAINER(window), VBox);
-	
 	table = gtk_table_new(4, 4, 1);
-	gtk_container_add(GTK_CONTAINER(VBox), table);
+	gtk_container_add(GTK_CONTAINER(window), table);
 	gtk_container_set_border_width(GTK_CONTAINER(table),5);
 
 	gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];

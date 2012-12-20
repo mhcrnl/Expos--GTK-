@@ -1,0 +1,257 @@
+\documentclass{beamer}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{graphicx}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\usetheme{Warsaw}
+\title[GTK+]{GTK+\\Une boîte à outils pour interfaces graphiques}
+\author{Flavien Godfroy et Kevin Bradshaw}
+\date{18 Décembre 2012}
+%%configuration de listings
+\lstset{
+language=c,
+basicstyle=\ttfamily\small, %
+identifierstyle=\color{black}, %
+keywordstyle=\color{blue}, %
+stringstyle=\color{pink!200}, %
+commentstyle=\it\color{green!95}, %
+columns=flexible, %
+tabsize=2, %
+extendedchars=true, %
+showspaces=false, %
+showstringspaces=false, %
+numbers=left, %
+numberstyle=\tiny, %
+breaklines=true, %
+breakautoindent=true, %
+captionpos=b
+}
+\begin{document}
+
+  \begin{frame}
+    \titlepage
+  \end{frame}
+
+  \begin{frame}<beamer>
+      \frametitle{}
+      \tableofcontents
+    \end{frame}
+
+  \AtBeginSection[]
+  {
+    \begin{frame}<beamer>
+      \frametitle{}
+      \tableofcontents[currentsection]
+    \end{frame}
+  }
+
+  \section{Introduction}
+
+  \subsection{Qu'est-ce?}
+    \begin{frame}{Qu'est-ce?}
+    GTK+ est une suite de bibliothèques (toolkit) visant la création d'interfaces graphiques de type WIMP (Windows, Icons, Menu, Pointer) par Widgets.\\
+    Visant originalement le langage C, elle est disponible aussi pour beaucoup d'autres, comme C++, Java et Python.
+  \end{frame}
+
+
+  \section{Histoire}
+  \subsection{La situation à l'époque}
+  \begin{frame}{X Window System}
+    \begin{itemize}
+      \item Protocole logiciel et réseau pour les interfaces graphiques\\
+      \item Créé au MIT en 1984\\
+      \item Devenu le standard "de facto" des affichages\\
+      \item Ne fournit pas de "look and feel" standardisé
+    \end{itemize}
+  \end{frame}
+  \begin{frame}{OPEN LOOK}
+    \begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.5]{"openlook"}
+    \caption{Un gestionnaire de fichiers avec OPEN LOOK}
+    \label{fig:openlook}
+    \end{figure}
+  \end{frame}
+  \begin{frame}{OPEN LOOK}
+    \begin{itemize}
+      \item Spécification logicielle pour les interfaces graphiques\\
+      \item Créé à la fin des années 1980 par Sun Microsystems et AT\&T pour Unix\\
+      \item Cherche à définir un "look and feel" pour Unix, pour suivre les efforts de Macintosh, Microsoft et Amiga
+    \end{itemize}
+  \end{frame}
+  \begin{frame}{Motif}
+    \begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.275]{"motif"}
+    \caption{Un calendrier avec Motif}
+    \label{fig:motif}
+    \end{figure}
+  \end{frame}
+  \begin{frame}{Motif}
+  \begin{itemize}
+    \item Un concurrent à OPEN LOOK\\
+    \item Finit par remplacer complètement OPEN LOOK en Juin 1993
+  \end{itemize}
+  \end{frame}
+
+  \subsection{GIMP}
+  \begin{frame}{GIMP}
+    \begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.225]{"gimp"}
+    \caption{GIMP rendu avec GTK+}
+    \label{fig:gimpgtk}
+    \end{figure}
+  \end{frame}
+  \begin{frame}{GIMP}
+  \begin{itemize}
+    \item General Image Manipulation Program puis GNU Image Manipulation Program\\
+    \item Peter Mattis et Spencer Kimball commencent le projet GIMP à U.C. Berkeley en 1995\\
+    \item Mattis n'étant pas satisfait par Motif, il crée le GIMP ToolKit ("GTK")\\
+    \item 1997, GIMP 0.60 utilise exclusivement GTK\\
+    \item 1998, Tor Lilqvist commence un portage de GTK et GIMP sur Windows\\
+    \item GTK se voit reconçu en orienté objet sous le nom "GTK+"
+  \end{itemize}
+  \end{frame}
+
+  \subsection{Aujourd'hui}
+  \begin{frame}{Aujourd'hui}
+  \begin{itemize}
+    \item GIMP et GTK+ séduisent la communauté GNU\\
+    \item Nouveau standard pour beaucoup de logiciels libres\\(ex: GNOME, Firefox, Ardour et Inkscape)\\
+    \item GTK+ se lance sur Macintosh et Windows, et encore d'autres\\
+    \item Liaisons avec d'autres langages, GTK+ devient plus accessible
+    \end{itemize}
+  \end{frame}
+
+  \section{GTK+ son fonctionnement}
+	\subsection{Le layout manager}
+	\begin{frame}{Le layout manager}
+		C'est un objet qui va nous permettre de mettre en forme notre fenêtre\\
+		Voici différent layout manager :\\
+		\begin{itemize}
+			\item GtkAlignment
+			\item GtkFixed
+			\item GtkVBox
+			\item GtkTable
+		\end{itemize}
+	\end{frame}
+	\subsection{Les Widget}
+	\begin{frame}{Un Widget c'est quoi ?}
+		\textbf{Définition : }\\
+		En informatique, le mot widget recouvre deux notions distinctes en relation avec les interfaces graphiques , il peut désigner :\\
+		\begin{itemize}
+			\item Un élément de base d'une interface graphique
+			\item Un petit outil qui permet d'obtenir des informations
+		\end{itemize}
+		Pour GTK tout les objets sont traité comme des widgets\\
+	\end{frame}
+	\subsection{Première fenêtre}
+	\begin{frame}[containsverbatim]{Première fenêtre}
+		Nous allons voir comment faire une fenêtre simple comme celle la :\\
+		\centering
+		\includegraphics[scale=0.35]{"hello"}\\
+		\begin{lstlisting}
+			//avant de commencer on oublie pas
+			#include <gtk/gtk.h>
+			//on definit un widget qui sera notre fenetre
+				GtkWidget *window;
+			//on laisse gtk se charger des configuration par defaut
+				gtk_init(&argc, &argv);
+		\end{lstlisting}
+	\end{frame}
+	\begin{frame}[containsverbatim]{Première fenêtre}
+		\begin{lstlisting}
+			//on creer notre fenetre
+				window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+			//on lui donne un titre et une taille
+				gtk_window_set_title(GTK_WINDOW(window), "Hello, world!");
+				gtk_window_set_default_size(GTK_WINDOW(window), 255, 200);
+			//on rend visible notre fenetre
+				gtk_widget_show_all(window);
+			//on lance le main de gtk qui va attendre une action
+				gtk_main();
+		\end{lstlisting}
+	\end{frame}
+
+	\section{Un petit projet avec GTK+}
+	\subsection{Calculatrice}
+	\begin{frame}[containsverbatim]{Interface de la calculatrice}
+		\centering
+		\includegraphics[scale=0.4]{"calc"}\\
+		\begin{lstlisting}
+			//on creer notre layout manager qui va contenir les boutons
+				table = gtk_table_new(4, 4, 1);
+				gtk_container_add(GTK_CONTAINER(window), table);
+				gtk_container_set_border_width(GTK_CONTAINER(table),5);
+		\end{lstlisting}
+	\end{frame}
+	\begin{frame}[containsverbatim]{Les évènements}
+		A chaque widget on peut associer un ou plusieurs évènements avec\\
+		\begin{lstlisting}
+			g_signal_connect(instance, detailed_signal, c_handler, data)
+		\end{lstlisting}
+		instance : notre widget sur lequel on souhaite faire le connect\\
+		detailed signal : type d'évènement\\
+		c handler : la fonction qui sera appelé quand on aura l'évènement\\
+		data : les données transmisent à la fonction\\
+	\end{frame}
+	\begin{frame}[containsverbatim]{Les évènements}
+		\begin{lstlisting}
+			//Fonction de remise a 0
+			void clear(GtkWidget *pBtn, MyData* data){
+				gtk_entry_set_text(GTK_ENTRY(data->Entrer), "0");
+				data->res = 0;
+				data->type = 0;
+			}
+			//Liaison de la fonction avec le bouton
+				g_signal_connect(G_OBJECT(Bouton),  "clicked", G_CALLBACK(clear), &data);
+		\end{lstlisting}
+	\end{frame}
+
+ \section{Pourquoi GTK+?}
+  \subsection{Une librairie multi-plateformes, multi-langages}
+  \begin{frame}{Pourquoi GTK+?}
+    \begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.6]{"gtkplus"}
+    \caption{Un gestionnaire de fichiers avec GTK+}
+    \label{fig:gtk}
+    \end{figure}
+  \end{frame}
+  \begin{frame}{Une librairie multi-plateformes, multi-langages}
+  \begin{itemize}
+    \item Offre une apparence unifiée sur tous les systèmes principaux\\
+    \item Disponible pour la majorité des langages utilisés en entreprise\\
+    \item Facile à lier à un nouveau langage si besoin est\\
+    \item Rend le portage de projets sur d'autres systèmes très simple\\
+    \item A su prouver sa fiabilité dans les différents projets qui l'utilisent
+  \end{itemize}
+  \end{frame}
+  \subsection{Comparaison à Qt}
+  \begin{frame}{Qt}
+    \begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.45]{"qt"}
+    \caption{Un editeur de contacts avec Qt}
+    \label{fig:qt}
+    \end{figure}
+  \end{frame}
+  \begin{frame}{Comparaison à Qt}
+  \begin{itemize}
+    \item Le concurrent pricipal\\
+    \item Qt fournit aussi des outils pour le multi-processus, multimedia, réseau et d'autres\\
+    \item Qt est implémenté directement en C++, GTK+ en C\\
+    \item Les deux sont compatibles avec la majorité des langages et systèmes d'exploitation principaux
+  \end{itemize}
+  \end{frame}
+
+  \section{Sources}
+  \begin{frame}{Sources}
+  	\url{http://zetcode.com/tutorials/gtktutorial}
+		\url{http://en.wikipedia.org/wiki/GTK}
+		\url{http://developer.gnome.org/gtk3/stable/}
+  \end{frame}
+\end{document}

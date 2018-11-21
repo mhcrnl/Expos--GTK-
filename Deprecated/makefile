@@ -5,7 +5,7 @@ ifeq ($(DEBUG),y)
 else
     CFLAGS=-W -Wall -ansi -pedantic
 endif
-LDFLAGS=`pkg-config --cflags --libs gtk+-3.0`
+LDFLAGS=`pkg-config --cflags --libs gtk+-2.0`
 EXEC=calc
 SRC= calc.c
 OBJ= $(SRC:%.c=%.o)
